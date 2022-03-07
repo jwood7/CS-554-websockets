@@ -47,6 +47,7 @@ function ChangePassword() {
                 id='currentPassword'
                 type='password'
                 placeholder='Current Password'
+                autoComplete='off'
                 required
               />
             </label>
@@ -61,6 +62,7 @@ function ChangePassword() {
                 id='newPasswordOne'
                 type='password'
                 placeholder='Password'
+                autoComplete='off'
                 required
               />
             </label>
@@ -74,6 +76,7 @@ function ChangePassword() {
                 id='newPasswordTwo'
                 type='password'
                 placeholder='Confirm Password'
+                autoComplete='off'
                 required
               />
             </label>

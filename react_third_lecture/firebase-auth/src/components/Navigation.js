@@ -14,19 +14,13 @@ const NavigationAuth = () => {
     <nav className='navigation'>
       <ul>
         <li>
-          <NavLink exact to='/' activeClassName='active'>
-            Landing
-          </NavLink>
+          <NavLink to='/'>Landing</NavLink>
         </li>
         <li>
-          <NavLink exact to='/home' activeClassName='active'>
-            Home
-          </NavLink>
+          <NavLink to='/home'>Home</NavLink>
         </li>
         <li>
-          <NavLink exact to='/account' activeClassName='active'>
-            Account
-          </NavLink>
+          <NavLink to='/account'>Account</NavLink>
         </li>
         <li>
           <SignOutButton />
@@ -41,20 +35,14 @@ const NavigationNonAuth = () => {
     <nav className='navigation'>
       <ul>
         <li>
-          <NavLink exact to='/' activeClassName='active'>
-            Landing
-          </NavLink>
+          <NavLink to='/'>Landing</NavLink>
         </li>
         <li>
-          <NavLink exact to='/signup' activeClassName='active'>
-            Sign-up
-          </NavLink>
+          <NavLink to='/signup'>Sign-up</NavLink>
         </li>
 
         <li>
-          <NavLink exact to='/signin' activeClassName='active'>
-            Sign-In
-          </NavLink>
+          <NavLink to='/signin'>Sign-In</NavLink>
         </li>
       </ul>
     </nav>
