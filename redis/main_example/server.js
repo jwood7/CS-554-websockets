@@ -15,6 +15,7 @@ const makeTestPromise = () => {
 app.get('/', async (req, res, next) => {
   let cacheForHomePageExists = await client.get('homePage');
   if (cacheForHomePageExists) {
+    console.log('Data was in cache');
     res.send(cacheForHomePageExists);
   } else {
     next();
@@ -25,7 +26,7 @@ app.get('/', async (req, res) => {
   let result = makeTestPromise();
   let secondResult = makeTestPromise();
   let bothResults = await Promise.all([result, secondResult]);
-
+  console.log('Data was not in cache');
   res.json(bothResults);
   let cachedForHomePage = await client.set(
     'homePage',

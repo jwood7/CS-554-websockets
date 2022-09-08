@@ -1,4 +1,3 @@
-const bluebird = require('bluebird');
 const flat = require('flat');
 const unflatten = flat.unflatten;
 const redis = require('redis');
@@ -6,7 +5,12 @@ const client = redis.createClient();
 
 const main = async () => {
   await client.connect();
-  let sayHello = await client.set('hello', ' FROM THE OTHER SIIIIIIIIIIDE');
+  let sayHello = await client.set(
+    'hello',
+    ' FROM THE OTHER SIIIIIIIIIIDE',
+    'EX 10'
+  );
+  await client.expire('hello', 20);
   let hello = await client.get('hello');
   console.log(`hello, ${hello}`);
 
