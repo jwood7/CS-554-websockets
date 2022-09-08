@@ -14,7 +14,7 @@ function Todo(props) {
   };
 
   return (
-    <div className='todo-wrapper'>
+    <div className='todo-wrapper todo'>
       <table>
         <tbody>
           <tr>

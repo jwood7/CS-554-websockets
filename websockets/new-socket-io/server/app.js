@@ -6,6 +6,7 @@ io.on('connection', (socket) => {
   console.log('new client connected', socket.id);
 
   socket.on('user_join', (name) => {
+    console.log('A user joined their name is ' + name);
     socket.broadcast.emit('user_join', name);
   });
 

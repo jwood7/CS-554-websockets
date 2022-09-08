@@ -1,5 +1,5 @@
 {
-	"name": "CS-554",
+	"name": "cs554",
 	"version": "1.0.0",
 	"description": "A small demo of gulp, SASS, and  application",
 	"main": "main.js",

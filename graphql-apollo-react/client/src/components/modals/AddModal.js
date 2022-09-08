@@ -18,32 +18,24 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
     width: '50%',
     border: '1px solid #28547a',
-    borderRadius: '4px'
-  }
+    borderRadius: '4px',
+  },
 };
 
 function AddModal(props) {
   const [showAddModal, setShowAddModal] = useState(props.isOpen);
-  const [addEmployee] = useMutation(queries.ADD_EMPLOYEE, {
-    update(cache, {data: {addEmployee}}) {
-      const {employees} = cache.readQuery({query: queries.GET_EMPLOYEES});
-      cache.writeQuery({
-        query: queries.GET_EMPLOYEES,
-        data: {employees: employees.concat([addEmployee])}
-      });
-    }
-  });
+  const [addEmployee] = useMutation(queries.ADD_EMPLOYEE);
 
   const [addEmployer] = useMutation(queries.ADD_EMPLOYER, {
     update(cache, {data: {addEmployer}}) {
       const {employers} = cache.readQuery({
-        query: queries.GET_EMPLOYERS_WITH_EMPLOYEES
+        query: queries.GET_EMPLOYERS_WITH_EMPLOYEES,
       });
       cache.writeQuery({
         query: queries.GET_EMPLOYERS_WITH_EMPLOYEES,
-        data: {employers: employers.concat([addEmployer])}
+        data: {employers: employers.concat([addEmployer])},
       });
-    }
+    },
   });
 
   const {data} = useQuery(queries.GET_EMPLOYERS);
@@ -71,8 +63,8 @@ function AddModal(props) {
             variables: {
               firstName: firstName.value,
               lastName: lastName.value,
-              employerId: parseInt(employerId.value)
-            }
+              employerId: parseInt(employerId.value),
+            },
           });
           firstName.value = '';
           lastName.value = '';
@@ -148,8 +140,8 @@ function AddModal(props) {
           e.preventDefault();
           addEmployer({
             variables: {
-              name: name.value
-            }
+              name: name.value,
+            },
           });
           name.value = '';
           setShowAddModal(false);

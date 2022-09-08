@@ -120,7 +120,7 @@ let exported = {
   DELETE_EMPLOYEE,
   GET_EMPLOYERS_WITH_EMPLOYEES,
   ADD_EMPLOYER,
-  EDIT_EMPLOYEE
+  EDIT_EMPLOYEE,
 };
 
 export default exported;

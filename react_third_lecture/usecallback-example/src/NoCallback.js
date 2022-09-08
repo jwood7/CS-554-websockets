@@ -22,7 +22,7 @@ const NoCallback = (props) => {
 
   return (
     <div>
-      Count: {count}
+      No Callback Count: {count}
       <button onClick={incrementCounter}>Increase counter</button>
       <button onClick={decrementCounter}>Decrease Counter</button>
       <button onClick={incrementNumber}>increase number</button>

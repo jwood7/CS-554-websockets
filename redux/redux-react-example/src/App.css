@@ -23,3 +23,14 @@ tr,
 td {
 	padding: 10px;
 }
+
+.add {
+	border: 1px,red,solid;
+}
+.todo {
+	border: 1px,blue,solid;
+}
+
+.todos{
+	border: 1px,green,solid;
+}

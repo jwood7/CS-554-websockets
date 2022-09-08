@@ -4,9 +4,6 @@ const app = express();
 const redis = require('redis');
 const client = redis.createClient();
 
-bluebird.promisifyAll(redis.RedisClient.prototype);
-bluebird.promisifyAll(redis.Multi.prototype);
-
 const makeTestPromise = () => {
   return new Promise((fulfill, reject) => {
     setTimeout(() => {
@@ -16,7 +13,7 @@ const makeTestPromise = () => {
 };
 
 app.get('/', async (req, res, next) => {
-  let cacheForHomePageExists = await client.getAsync('homePage');
+  let cacheForHomePageExists = await client.get('homePage');
   if (cacheForHomePageExists) {
     res.send(cacheForHomePageExists);
   } else {
@@ -30,13 +27,14 @@ app.get('/', async (req, res) => {
   let bothResults = await Promise.all([result, secondResult]);
 
   res.json(bothResults);
-  let cachedForHomePage = await client.setAsync(
+  let cachedForHomePage = await client.set(
     'homePage',
     JSON.stringify(bothResults)
   );
 });
 
-app.listen(3001, () => {
+app.listen(3000, async () => {
+  await client.connect();
   console.log("We've now got a server!");
   console.log('Your routes will be running on http://localhost:3000');
 });

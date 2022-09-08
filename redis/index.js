@@ -4,24 +4,19 @@ const unflatten = flat.unflatten;
 const redis = require('redis');
 const client = redis.createClient();
 
-bluebird.promisifyAll(redis.RedisClient.prototype);
-bluebird.promisifyAll(redis.Multi.prototype);
-
 const main = async () => {
-  let sayHello = await client.setAsync(
-    'hello',
-    ' FROM THE OTHER SIIIIIIIIIIDE'
-  );
-  let hello = await client.getAsync('hello');
+  await client.connect();
+  let sayHello = await client.set('hello', ' FROM THE OTHER SIIIIIIIIIIDE');
+  let hello = await client.get('hello');
   console.log(`hello, ${hello}`);
 
-  let doesHelloExist = await client.existsAsync('hello');
+  let doesHelloExist = await client.exists('hello');
   console.log(`doesHelloExist ? ${doesHelloExist === 1}`);
 
-  let doesPikachuExist = await client.existsAsync('pikachu');
+  let doesPikachuExist = await client.exists('pikachu');
   console.log(`doesPikachuExist ? ${doesPikachuExist === 1}`);
 
-  let setResult = await client.setAsync('goodnight', 'moon');
+  let setResult = await client.set('goodnight', 'moon');
   console.log(setResult);
 
   let batchResult = await client
@@ -29,65 +24,65 @@ const main = async () => {
     .set('favoriteDrink', 'coffee')
     .set('favoriteFood', 'steak')
     .set('cake', 'is a lie')
-    .execAsync();
+    .exec();
   console.log(batchResult);
 
-  let multiResult = await client.mgetAsync(
+  let multiResult = await client.mGet([
     'favoriteDrink',
     'favoriteFood',
     'cake',
     'goodnight',
-    'hello'
-  );
+    'hello',
+  ]);
   console.log(multiResult);
 
-  let deleteHello = await client.delAsync('hello');
+  let deleteHello = await client.del('hello');
   console.log(deleteHello);
 
-  doesHelloExist = await client.existsAsync('hello');
+  doesHelloExist = await client.exists('hello');
   console.log(`doesHelloExist ? ${doesHelloExist === 1}`);
 
   let bio = {
     name: {
       first: 'Patrick',
-      last: 'Hill'
+      last: 'Hill',
     },
     goal: {
       desc: 'TO BE THE VERY BEST, LIKE NO ONE EVER WAS!',
       test: 'TO CATCH THEM IS MY REAL TEST -- ',
-      cause: 'TO TRAIN THEM IS MY CAUUUUUSE!'
+      cause: 'TO TRAIN THEM IS MY CAUUUUUSE!',
     },
     hobbies: ['making coffee', 'making low carb recipes', 'soccer'],
     'education.college': {
-      name: 'Stevens'
+      name: 'Stevens',
     },
     'hobbiesAsObject[]': {
       0: 'making coffee',
       1: 'making low carb recipes',
-      sport: 'Baseball'
+      sport: 'Baseball',
     },
-    age: 46
+    age: 46,
   };
   //let hmSetAsyncBio = await client.hmsetAsync('bioFAIL', bio);
   //let hmSetAsyncBioJson = await client.hmsetAsync('bio', jsonString);
   let flatBio = flat(bio);
   console.log(flatBio);
-  let hmSetAsyncBio = await client.hmsetAsync('bio', flatBio);
+  let hmSetAsyncBio = await client.hSet('bio', flatBio);
   console.log(hmSetAsyncBio);
 
-  const incrAge = await client.hincrbyAsync('bio', 'age', 1);
+  const incrAge = await client.hIncrBy('bio', 'age', 1);
   console.log(incrAge);
 
-  const flatBioFromRedis = await client.hgetallAsync('bio');
+  const flatBioFromRedis = await client.hGetAll('bio');
   console.log(flatBioFromRedis);
 
   const remadeBio = unflatten(flatBioFromRedis);
   console.log(remadeBio);
 
   const jsonBio = JSON.stringify(bio);
-  await client.setAsync('patrickJsonBio', jsonBio);
+  await client.set('patrickJsonBio', jsonBio);
 
-  const jsonBioFromRedis = await client.getAsync('patrickJsonBio');
+  const jsonBioFromRedis = await client.get('patrickJsonBio');
   const recomposedBio = JSON.parse(jsonBioFromRedis);
   console.log(recomposedBio);
 };

@@ -17,12 +17,13 @@ function App() {
 
   useEffect(() => {
     socketRef.current.on('message', ({name, message}) => {
+      console.log('The server has sent some data to all clients');
       setChat([...chat, {name, message}]);
     });
     socketRef.current.on('user_join', function (data) {
       setChat([
         ...chat,
-        {name: 'ChatBot', message: `${data} has joined the chat`}
+        {name: 'ChatBot', message: `${data} has joined the chat`},
       ]);
     });
   }, [chat]);
@@ -37,7 +38,7 @@ function App() {
     setState({...state, [msgEle.name]: msgEle.value});
     socketRef.current.emit('message', {
       name: state.name,
-      message: msgEle.value
+      message: msgEle.value,
     });
     e.preventDefault();
     setState({message: '', name: state.name});
